@@ -75,7 +75,7 @@ const display = () => {
     if(fruits[i].color == 'фиолетовый'){fruitColor = 'border-violet'}
 
     let fruitModel = document.createElement('div');
-    fruitModel.className = `col-3 pr-2 pl-2`;
+    fruitModel.className = `col-6 col-md-4 col-lg-3 pr-2 pl-2`;
     fruitModel.innerHTML = `
     <div class="card ${fruitColor} mb-3">
         <div class="card-body">
