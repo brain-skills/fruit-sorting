@@ -84,11 +84,11 @@ h6 {
   color: #000;
 }
 .logo {
-  display: flex;
   margin: auto;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+  top: 20px;
+  right: 15px;
+  width: 180px;
+  position: absolute;
 }
 #sidebar {
   width: 30%;
