@@ -19,6 +19,7 @@ const fruitWeight = document.querySelector('#fruitWeight'); // поле с ве�
 const fruitAdd = document.querySelector('#fruitAdd'); // кнопка добавления
 
 const rainbowColors = ['красный','оранжевый','желтый','зеленый','голубой','синий','фиолетовый']; // цвета радуги
+let trustButton = false;
 // ===============================================================
 
 
@@ -192,6 +193,7 @@ const filterFruits = () => {
   }else if(minWeight.value == '' && maxWeight.value == ''){
     fruits = sourceFruits;
   }
+  trustButton = true;
 };
 
 filterButton.addEventListener('click', () => {
@@ -270,16 +272,12 @@ const sortAPI = {
               sortArr.push(temp);
           }
       }
-      for (let j = 0; j < 1000; j++) {
-        j++;
-      }
     }
     fruits = sortArr;
   },
   // Быстрая сортировка
   quickSort(items, left, right,) {
     let index;
-    let firstFruits = JSON.parse(fruitsJSON);
     if (items.length > 1) {
       left = typeof left != "number" ? 0 : left;
       right = typeof right != "number" ? items.length - 1 : right;
@@ -339,25 +337,27 @@ sortButton.addEventListener('click', () => {
 /*** Добавление фруктов ***/
 // ===============================================================
 fruitAdd.addEventListener('click', () => {
+  if(trustButton == true){
     let originFruits = JSON.parse(fruitsJSON);
     fruits = originFruits;
-    let newFruit = [];
-    let newFruitColor = '';
-    if(colorsList.value == '#ff0000'){newFruitColor = 'красный'};
-    if(colorsList.value == '#ffa500'){newFruitColor = 'оранжевый'};
-    if(colorsList.value == '#ffff00'){newFruitColor = 'желтый'};
-    if(colorsList.value == '#008000'){newFruitColor = 'зеленый'};
-    if(colorsList.value == '#87ceeb'){newFruitColor = 'голубой'};
-    if(colorsList.value == '#0000ff'){newFruitColor = 'синий'};
-    if(colorsList.value == '#9400d3'){newFruitColor = 'фиолетовый'};
-    if(fruitName.value != "" && colorsList.value != "" && fruitWeight.value != "") {
-      for(i=5; i <= fruits.length; i++){
-        newFruit = {"id": i, "kind": fruitName.value, "color": newFruitColor, "weight": fruitWeight.value};
-      }
-      fruits.push(newFruit);
-    } else {
-      alert('Пожалуйста заполните все поля!');
+  }
+  let newFruit = [];
+  let newFruitColor = '';
+  if(colorsList.value == '#ff0000'){newFruitColor = 'красный'};
+  if(colorsList.value == '#ffa500'){newFruitColor = 'оранжевый'};
+  if(colorsList.value == '#ffff00'){newFruitColor = 'желтый'};
+  if(colorsList.value == '#008000'){newFruitColor = 'зеленый'};
+  if(colorsList.value == '#87ceeb'){newFruitColor = 'голубой'};
+  if(colorsList.value == '#0000ff'){newFruitColor = 'синий'};
+  if(colorsList.value == '#9400d3'){newFruitColor = 'фиолетовый'};
+  if(fruitName.value != "" && colorsList.value != "" && fruitWeight.value != "") {
+    for(i=5; i <= fruits.length; i++){
+      newFruit = {"id": i, "kind": fruitName.value, "color": newFruitColor, "weight": fruitWeight.value};
     }
-    display();
-  });
+    fruits.push(newFruit);
+  } else {
+    alert('Пожалуйста заполните все поля!');
+  }
+  display();
+});
 // ===============================================================
