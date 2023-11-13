@@ -42,9 +42,6 @@ let fruitsJSON = `[
   {"id": 3, "kind": "Карамбола", "color": "желтый", "weight": 28},
   {"id": 4, "kind": "Тамаринд", "color": "оранжевый", "weight": 22}
 ]`;
-// {"id": 5, "kind": "Квандонг", "color": "голубой", "weight": 69},
-// {"id": 6, "kind": "Блуберри", "color": "синий", "weight": 69}
-
 let fruits = JSON.parse(fruitsJSON);
 // ===============================================================
 
@@ -217,7 +214,6 @@ filterButton.addEventListener('click', () => {
 
 /*** Сортировка ***/
 // ===============================================================
-
 // Функция сравнения двух элементов по цвету
 const comparationColor = (a, b) => {
   return a == b ? true : false;
