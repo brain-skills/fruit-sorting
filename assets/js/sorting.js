@@ -343,6 +343,8 @@ sortButton.addEventListener('click', () => {
 /*** Добавление фруктов ***/
 // ===============================================================
 fruitAdd.addEventListener('click', () => {
+    let originFruits = JSON.parse(fruitsJSON);
+    fruits = originFruits;
     let newFruit = [];
     let newFruitColor = '';
     if(colorsList.value == '#ff0000'){newFruitColor = 'красный'};
