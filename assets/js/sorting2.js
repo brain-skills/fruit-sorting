@@ -217,37 +217,12 @@ const comparationColor = (a, b) => {
   return a == b ? true : false;
 };
 
-// функция обмена элементов
-function swap(items, firstIndex, secondIndex){
-  const temp = items[firstIndex];
-  items[firstIndex] = items[secondIndex];
-  items[secondIndex] = temp;
-}
-// функция разделитель
-function partition(items, left, right) {
-  var pivot = items[Math.floor((right + left) / 2)],
-    i = left,
-    j = right;
-  while (i <= j) {
-      while (items[i] < pivot) {
-        i++;
-      }
-      while (items[j] > pivot) {
-        j--;
-      }
-      if (i <= j) {
-        swap(items, i, j);
-        i++;
-        j--;
-      }
-  }
-  return i;
-}
-// Получаем индексы фруктов в хаотичной последовательности (как они есть) quick sort
+// Получаем индексы фруктов в хаотичной последовательности (как они есть)
 let incorrectMass = [];
-for(i=0; i<fruits.length; i++){
- for(j=0; j<rainbowColors.length; j++){
-    if(fruits[i].color == rainbowColors[j]){
+let firstFruits = JSON.parse(fruitsJSON);
+for(i=0; i<firstFruits.length; i++){
+  for(j=0; j<rainbowColors.length; j++){
+    if(firstFruits[i].color == rainbowColors[j]){
       incorrectMass.push(j);
     }
   }
@@ -272,29 +247,25 @@ const sortAPI = {
     fruits = sortArr;
   },
   // Быстрая сортировка
-  quickSort(items, arr, left, right) {
-    let index;
-    if (items.length > 1) {
-      left = typeof left != "number" ? 0 : left;
-      right = typeof right != "number" ? items.length - 1 : right;
-      index = partition(items, left, right);
-      if (left < index - 1) {
-        sortAPI.quickSort(items, left, index - 1);
-      }
-      if (index < right) {
-        sortAPI.quickSort(items, index, right);
-      }
-    }
-    let sortmas = [];
-    for(i = 0; i < items.length; i++){
-      for(j = 0; j < arr.length; j++){
-        console.log(arr[j]);
-        if(rainbowColors[items[i]] == arr[j].color){
-          sortmas.push(arr[j]);
-        }
+  quickSort(array) {
+    if(array.length == 1){return array};
+    const pivot = array[array.length-1];
+    const leftArr = [];
+    const rightArr = [];
+    for(i = 0; i < array.length-1; i++){
+      if(array[i] < pivot){
+        leftArr.push(array[i]);
+      }else{
+        rightArr.push(array[i]);
       }
     }
-    fruits = sortmas;
+    if(leftArr.length > 0 && rightArr.length > 0){
+      return [...this.quickSort(leftArr), pivot, ...this.quickSort(rightArr)];
+    }else if(leftArr.length > 0){
+      return [...this.quickSort(leftArr), pivot];
+    }else {
+      return [pivot, ...this.quickSort(rightArr)];
+    }
   },
 
   // выполняет сортировку и производит замер времени
@@ -303,7 +274,18 @@ const sortAPI = {
     if(sortType.options.selectedIndex == 0){
       sortAPI.bubbleSort(rainbowColors,fruits, comparationColor);
     } else if (sortType.options.selectedIndex == 1){
-      sortAPI.quickSort(incorrectMass, fruits);
+      // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+      let correctMass = sortAPI.quickSort(incorrectMass);
+      let sortmas = [];
+      for(i = 0; i < correctMass.length; i++){
+        for(j = 0; j < fruits.length; j++){
+          if(rainbowColors[correctMass[i]] == fruits[j].color){
+            sortmas.push(fruits[j]);
+          }
+        }
+      }
+      fruits = sortmas;
+      // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     }
     const end = new Date().getTime(); // время в конце выполнения (в миллисекундах)
     sortTime.textContent = `${end - start}`; // отнимаем от начального времени - конечное и получаем разницу.
