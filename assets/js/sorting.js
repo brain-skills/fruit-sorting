@@ -114,6 +114,8 @@ resetButton.addEventListener('click', () => {
   document.querySelectorAll('input').forEach(el => el.value = ''); // стираем все input поля
   sortType.options.selectedIndex = 0; // возвращаем первый option в выпадающем списке алгоритмов сортировки
   colorsList.value = '#ff0000'; // возвращаем первый цвет из списка доступных цветов
+  sortMethod.innerHTML = ''; // очищаем поле "метод сортировки"
+  sortTime.innerHTML = '0'; // сбрасываем время сортировки
   display();
 });
 // ===============================================================
@@ -305,7 +307,7 @@ const sortAPI = {
     fruits = sortmas;
   },
 
-  // выполняет сортировку и производит замер времени
+  // вызываем сортировку и производим замер времени
   startSort() {
     const start = new Date().getTime(); // время в начале выполнения (в миллисекундах)
     if(sortType.options.selectedIndex == 0){
