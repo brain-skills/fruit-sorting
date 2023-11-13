@@ -9,11 +9,12 @@ const minWeight = document.querySelector('#minWeight'); // кнопка филь
 const maxWeight = document.querySelector('#maxWeight'); // кнопка фильтрации
 
 const sortType = document.querySelector('#sortType'); // список возможных сортировок
+const sortMethod = document.querySelector('#sortMethod'); // текущий метод сортировки
 const sortTimeLabel = document.querySelector('#sortTime'); // поле с временем сортировки
 const sortButton = document.querySelector('#sortButton'); // кнопка сортировки
 
 const fruitName = document.querySelector('#fruitName'); // поле с названием вида
-const colorsList = document.querySelector("input[list=color-test]"); // поле с названием цвета
+const colorsList = document.querySelector("input[list=colorTest]"); // поле с названием цвета
 const fruitWeight = document.querySelector('#fruitWeight'); // поле с весом
 const fruitAdd = document.querySelector('#fruitAdd'); // кнопка добавления
 
@@ -109,7 +110,10 @@ display();
 // ===============================================================
 resetButton.addEventListener('click', () => {
   let originFruits = JSON.parse(fruitsJSON);
-  fruits = originFruits;
+  fruits = originFruits; // возвращаем исходный список фруктов
+  document.querySelectorAll('input').forEach(el => el.value = ''); // стираем все input поля
+  sortType.options.selectedIndex = 0; // возвращаем первый option в выпадающем списке алгоритмов сортировки
+  colorsList.value = '#ff0000'; // возвращаем первый цвет из списка доступных цветов
   display();
 });
 // ===============================================================
@@ -306,8 +310,10 @@ const sortAPI = {
     const start = new Date().getTime(); // время в начале выполнения (в миллисекундах)
     if(sortType.options.selectedIndex == 0){
       sortAPI.bubbleSort(rainbowColors,fruits, comparationColor);
+      sortMethod.innerHTML = sortType[0].value;
     } else if (sortType.options.selectedIndex == 1){
       sortAPI.quickSort(mixIndex(), fruits);
+      sortMethod.innerHTML = sortType[1].value;
     }
     const end = new Date().getTime(); // время в конце выполнения (в миллисекундах)
     sortTime.textContent = `${end - start}`; // отнимаем от начального времени - конечное и получаем разницу.
@@ -350,7 +356,7 @@ fruitAdd.addEventListener('click', () => {
       }
       fruits.push(newFruit);
     } else {
-      alert('Warning');
+      alert('Пожалуйста заполните все поля!');
     }
     display();
   });

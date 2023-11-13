@@ -24,6 +24,7 @@
   <div class="pt-5 pr-3 pb-1 pl-3">
     <a href="/fruit-sorting/"><img src="assets/images/logo.svg?ver=0.0.0.0.4" class="logo" alt=""></a>
   </div>
+  <form action="" id="fruitSorting"></form>
   <div class="pt-3 pr-3 pb-3 pl-3">
     <div class="widgets border-bottom pb-3 border-dark mb-3 border-top border-dark pt-3">
       <button type="button" class="btn btn-outline-danger btn-sm" id="resetButton">reset</button>
@@ -56,6 +57,9 @@
           </select>
         </div>
         <div class="col-12">
+          <label class="form-label">Метод сортировки: <span id="sortMethod"></span></label>
+        </div>
+        <div class="col-12">
           <label class="form-label">Время сортировки: <span id="sortTime">0</span>.мс</label>
         </div>
         <div class="col-12">
@@ -72,8 +76,8 @@
         </div>
         <div class="col-12 col-md-6 pt-1">
           <label class="form-label mb-0">Цвет:</label>
-          <input type="color" list="color-test" value="#0000ff" class="form-control form-control-color" placeholder="0" required/>
-          <datalist id="color-test">
+          <input type="color" list="colorTest" value="#ff0000" class="form-control form-control-color" placeholder="0" required/>
+          <datalist id="colorTest">
               <option value="#ff0000">red</option>
               <option value="#ffa500">orange</option>
               <option value="#ffff00">yellow</option>
