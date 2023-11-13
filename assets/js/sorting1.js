@@ -243,17 +243,14 @@ function partition(items, left, right) {
   }
   return i;
 }
-// Беру фрукт, нахожу его цвет и узнаю его индекс из rainbowColors
-function mixIndex(){
-  let incorrectMass = [];
-  for(i=0; i<fruits.length; i++){
-  for(j=0; j<rainbowColors.length; j++){
-      if(fruits[i].color == rainbowColors[j]){
-        incorrectMass.push(j);
-      }
+// Получаем индексы фруктов в хаотичной последовательности (как они есть) quick sort
+let incorrectMass = [];
+for(i=0; i<fruits.length; i++){
+ for(j=0; j<rainbowColors.length; j++){
+    if(fruits[i].color == rainbowColors[j]){
+      incorrectMass.push(j);
     }
   }
-  return incorrectMass;
 }
 
 const sortAPI = {
@@ -275,9 +272,8 @@ const sortAPI = {
     fruits = sortArr;
   },
   // Быстрая сортировка
-  quickSort(items, left, right,) {
+  quickSort(items, arr, left, right) {
     let index;
-    let firstFruits = JSON.parse(fruitsJSON);
     if (items.length > 1) {
       left = typeof left != "number" ? 0 : left;
       right = typeof right != "number" ? items.length - 1 : right;
@@ -289,12 +285,12 @@ const sortAPI = {
         sortAPI.quickSort(items, index, right);
       }
     }
-    let set = [...new Set(items)];
     let sortmas = [];
-    for(i = 0; i < set.length; i++){
-      for(j = 0; j < fruits.length; j++){
-        if(rainbowColors[set[i]] == fruits[j].color){
-          sortmas.push(fruits[j]);
+    for(i = 0; i < items.length; i++){
+      for(j = 0; j < arr.length; j++){
+        console.log(arr[j]);
+        if(rainbowColors[items[i]] == arr[j].color){
+          sortmas.push(arr[j]);
         }
       }
     }
@@ -307,7 +303,7 @@ const sortAPI = {
     if(sortType.options.selectedIndex == 0){
       sortAPI.bubbleSort(rainbowColors,fruits, comparationColor);
     } else if (sortType.options.selectedIndex == 1){
-      sortAPI.quickSort(mixIndex(), fruits);
+      sortAPI.quickSort(incorrectMass, fruits);
     }
     const end = new Date().getTime(); // время в конце выполнения (в миллисекундах)
     sortTime.textContent = `${end - start}`; // отнимаем от начального времени - конечное и получаем разницу.
